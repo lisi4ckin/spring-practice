@@ -8,7 +8,7 @@ import java.util.Set;
 public interface UserService {
     void addUser(Users users);
     void deleteUser(Long id);
-    void updateBuyer(Users buyer);
+    void updateUser(UserDTO userDTO);
     UserDTO getById(Long id);
     Set<UserDTO> getAllUsers();
 }

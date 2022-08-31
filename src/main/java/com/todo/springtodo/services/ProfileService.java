@@ -10,7 +10,7 @@ import java.util.Set;
 public interface ProfileService {
     void addProfile(Profile profile);
     void deleteProfile(Long id);
-    void updateProfile(Profile profile);
+    void updateProfile(ProfileDTO profileDTO);
     ProfileDTO getById(Long id);
     Set<ProfileDTO> getAllProfiles();
 }

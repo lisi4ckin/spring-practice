@@ -1,9 +1,13 @@
 package com.todo.springtodo.services.impl;
 
+import com.todo.springtodo.dto.ProfileDTO;
 import com.todo.springtodo.dto.UserDTO;
+import com.todo.springtodo.entities.Profile;
 import com.todo.springtodo.entities.Users;
+import com.todo.springtodo.mappers.ProfileMapper;
 import com.todo.springtodo.mappers.UserMapper;
 import com.todo.springtodo.repositories.UserRepository;
+import com.todo.springtodo.services.ProfileService;
 import com.todo.springtodo.services.UserService;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +22,15 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private ProfileMapper profileMapper;
+
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private ProfileService profileService;
 
     @Override
     @Transactional
@@ -34,8 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateBuyer(Users buyer) {
-
+    @Transactional
+    public void updateUser(UserDTO userDTO) {
+        Users user = userMapper.toUsers(userDTO);
+        userRepository.findById(user.getId()).get().setLogin(user.getLogin());
+        userRepository.findById(user.getId()).get().setHashPassword(user.getHashPassword());
+        profileService.updateProfile(profileMapper.toProfileDTO(user.getProfile()));
+        userRepository.findById(user.getId()).get().setOrderList(user.getOrderList());
     }
 
     @Override

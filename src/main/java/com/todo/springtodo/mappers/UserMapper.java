@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProfileMapper.class})
 public interface UserMapper {
     @Mappings({
         @Mapping(source = "hashPassword", target = "password"),

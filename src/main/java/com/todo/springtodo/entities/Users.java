@@ -25,10 +25,7 @@ public class Users {
     @NotNull
     private String hashPassword;
 
-    @OneToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    }, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
