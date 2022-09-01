@@ -3,6 +3,8 @@ package com.todo.springtodo.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -13,4 +15,10 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
     private String title;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "category"
+    )
+    private Set<Item> itemSet;
 }

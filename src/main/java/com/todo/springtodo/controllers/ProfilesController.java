@@ -30,4 +30,11 @@ public class ProfilesController {
     public ProfileDTO getProfileById(@PathVariable("id") Long id){
         return profileService.getById(id);
     }
+
+    @PutMapping("/update/{id}")
+    public ProfileDTO updateProfileById(@PathVariable("id") Long id,
+                                        @RequestBody ProfileDTO profileDTO){
+        profileService.updateProfile(profileDTO);
+        return profileService.getById(id);
+    }
 }
