@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="alexander (generated)" id="1662017978178-1">
+        <createSequence sequenceName="categories_category_id_seq"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-2">
+        <createSequence sequenceName="item_id_seq"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-3">
+        <createSequence sequenceName="orders_id_seq"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-4">
+        <createSequence sequenceName="profile_id_seq"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-5">
+        <createSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-6">
+        <createTable tableName="categories">
+            <column autoIncrement="true" name="category_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="categories_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-7">
+        <createTable tableName="delivery">
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count_items" type="INT"/>
+            <column name="delivery_cost" type="FLOAT4"/>
+            <column name="delivery_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="delivery_type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-8">
+        <createTable tableName="item">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="item_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="item_price" type="FLOAT4"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-9">
+        <createTable tableName="order_item">
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-10">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="orders_pkey"/>
+            </column>
+            <column name="order_cost" type="FLOAT4"/>
+            <column name="payment_method" type="VARCHAR(255)"/>
+            <column name="state" type="INT"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-11">
+        <createTable tableName="profile">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="profile_pkey"/>
+            </column>
+            <column name="age" type="INT"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="registry_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-12">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="hash_password" type="VARCHAR(255)"/>
+            <column name="login" type="VARCHAR(255)"/>
+            <column name="profile_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-13">
+        <addPrimaryKey columnNames="order_id" constraintName="delivery_pkey" tableName="delivery"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-14">
+        <addPrimaryKey columnNames="order_id, item_id" constraintName="order_item_pkey" tableName="order_item"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-15">
+        <addForeignKeyConstraint baseColumnNames="profile_id" baseTableName="users"
+                                 constraintName="fk5q3e9303ap1wvtia6sft7ht1s" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="profile"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-16">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="item"
+                                 constraintName="fk7k18sd20vy08yjs53gp65xyov" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="category_id" referencedTableName="categories"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-17">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="orders"
+                                 constraintName="fkh0vxwit7yrip7v9pjqlocmbxp" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-18">
+        <addForeignKeyConstraint baseColumnNames="item_id" baseTableName="order_item"
+                                 constraintName="fkija6hjjiit8dprnmvtvgdp6ru" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="item"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-19">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_item"
+                                 constraintName="fkt4dc2r9nbvbujrljv3e23iibt" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="orders"/>
+    </changeSet>
+    <changeSet author="alexander (generated)" id="1662017978178-20">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="delivery"
+                                 constraintName="fku4e8rjwmg09vmas3ccjwglso" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="orders"/>
+    </changeSet>
+</databaseChangeLog>
