@@ -30,12 +30,9 @@ public class Users {
     private Profile profile;
 
     @OneToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },
-            mappedBy = "user"
+            cascade = CascadeType.ALL
     )
+    @JoinColumn(name = "order_id")
     private List<Order> orderList;
 
     public void setHashPassword(String hashPassword) {

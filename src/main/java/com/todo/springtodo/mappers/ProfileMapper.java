@@ -10,11 +10,10 @@ import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface ProfileMapper {
-    @Mappings({
-            @Mapping(source = "firstName", target = "first_name"),
-            @Mapping(source = "lastName", target = "last_name"),
-            @Mapping(source = "registryDate", target = "registry"),
-    })
+
+    @Mapping(source = "firstName", target = "first_name")
+    @Mapping(source = "lastName", target = "last_name")
+    @Mapping(source = "registryDate", target = "registry")
     ProfileDTO toProfileDTO(Profile profile);
 
     Set<ProfileDTO> toProfileDTOs(Set<Profile> profiles);

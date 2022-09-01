@@ -10,9 +10,9 @@ import java.util.Set;
 
 public interface CategoryService {
     void addCategory(Category category);
-    void deleteCategory(Long id);
+    void deleteCategory(String title);
     void updateCategory(CategoryDTO CategoryDTO);
     CategoryDTO getById(Long id);
-    Set<CategoryDTO> getAllProfiles();
+    Set<CategoryDTO> getAllCategories();
     List<Item> getItemInThisCategory(Long id);
 }

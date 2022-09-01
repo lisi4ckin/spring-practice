@@ -3,6 +3,7 @@ package com.todo.springtodo.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
@@ -15,17 +16,12 @@ public class Item {
     private String title;
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            }
-    )
+    @ManyToOne
     @JoinColumn(name = "category_id")
+    @NotNull
     private Category category;
 
     @ManyToMany(mappedBy = "items")
     private Set<Order> orders;
-
 
 }
