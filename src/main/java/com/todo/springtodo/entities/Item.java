@@ -9,19 +9,22 @@ import java.util.Set;
 @Data
 @Entity
 public class Item {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Float itemPrice;
     private String title;
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    @NotNull
     private Category category;
 
-    @ManyToMany(mappedBy = "items")
-    private Set<Order> orders;
 
+//    @ManyToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL
+//    )
+//    private Set<Order> orders;
 }
