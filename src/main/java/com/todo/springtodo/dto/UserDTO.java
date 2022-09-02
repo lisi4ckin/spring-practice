@@ -15,5 +15,5 @@ public class UserDTO {
     private String login;
     private String password;
     private ProfileDTO profile;
-    private List<Order> order_list;
+    private List<OrderDTO> order_list;
 }
