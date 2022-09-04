@@ -15,10 +15,4 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
     private String title;
-
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            mappedBy = "category"
-    )
-    private Set<Item> itemSet;
 }
