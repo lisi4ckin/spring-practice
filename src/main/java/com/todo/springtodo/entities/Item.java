@@ -21,10 +21,4 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-//    @ManyToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL
-//    )
-//    private Set<Order> orders;
 }

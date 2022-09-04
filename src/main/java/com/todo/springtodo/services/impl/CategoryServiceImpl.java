@@ -37,8 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(CategoryDTO CategoryDTO) {
-
+    public void updateCategory(CategoryDTO categoryDTO) {
+        Category updateCategory = categoryRepository.getCategoryByTitle(categoryDTO.getTitle());
+        updateCategory.setTitle(categoryDTO.getTitle());
     }
 
     @Override

@@ -17,5 +17,4 @@ public class ItemsDTO {
     private String title;
     private String description;
     private CategoryDTO category;
-    private Set<OrderDTO> orders;
 }
