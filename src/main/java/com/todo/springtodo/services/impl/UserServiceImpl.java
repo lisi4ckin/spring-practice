@@ -1,16 +1,13 @@
 package com.todo.springtodo.services.impl;
 
-import com.todo.springtodo.controllers.UserController;
-import com.todo.springtodo.dto.ProfileDTO;
 import com.todo.springtodo.dto.UserDTO;
-import com.todo.springtodo.entities.Profile;
 import com.todo.springtodo.entities.Users;
+import com.todo.springtodo.exception.exception_classes.NoSuchUserException;
 import com.todo.springtodo.mappers.ProfileMapper;
 import com.todo.springtodo.mappers.UserMapper;
 import com.todo.springtodo.repositories.UserRepository;
 import com.todo.springtodo.services.ProfileService;
 import com.todo.springtodo.services.UserService;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -76,7 +72,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getById(Long id) {
-        return userMapper.toUserDTO(userRepository.findById(id).get());
+        Users existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser == null){
+            throw new NoSuchUserException("No such user with this id=" + id);
+        }
+        return userMapper.toUserDTO(existingUser);
     }
 
     @Override
