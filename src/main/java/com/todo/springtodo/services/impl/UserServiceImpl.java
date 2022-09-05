@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addUser(Users users) {
         users.setHashPassword(users.getHashPassword());
+
         userRepository.save(users);
     }
 
@@ -50,23 +51,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(UserDTO userDTO) {
-        Users dataUpdateUser = userMapper.toUsers(userDTO);
-        Optional<Users> user = userRepository.findById(dataUpdateUser.getId());
-        if (user.isPresent()){
-
-            logger.debug("Start update user with id={}", dataUpdateUser.getId());
-
-            Users updateUser = user.get();
-            updateUser.setLogin(dataUpdateUser.getLogin());
-            updateUser.setHashPassword(dataUpdateUser.getHashPassword());
-            profileService.updateProfile(profileMapper.toProfileDTO(dataUpdateUser.getProfile()));
-            updateUser.setOrderList(dataUpdateUser.getOrderList());
-            userRepository.save(updateUser);
-
-            logger.debug("Finished update user with id={}", dataUpdateUser.getId());
+        Users existingUser = userRepository.findById(userDTO.getId()).orElse(null);
+        if (existingUser != null){
+            logger.debug("Start update user with id={}", userDTO.getId());
+            existingUser.setLogin(userDTO.getLogin());
+            existingUser.setHashPassword(userDTO.getPassword());
+            profileService.updateProfile(profileMapper.toProfileDTO(profileMapper.toProfile(userDTO.getProfile())));
+            logger.debug("Finished update user with id={}", existingUser.getId());
         }
         else{
-            logger.error("User with this id={} don't exist", dataUpdateUser.getId());
+            throw new NoSuchUserException(String.format("User with this id=%d don't exist", userDTO.getId()), userDTO);
         }
     }
 
