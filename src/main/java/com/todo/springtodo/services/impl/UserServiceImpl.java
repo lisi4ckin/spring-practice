@@ -2,6 +2,7 @@ package com.todo.springtodo.services.impl;
 
 import com.todo.springtodo.dto.UserDTO;
 import com.todo.springtodo.entities.Users;
+import com.todo.springtodo.exception.exception_classes.DuplicateLoginUserAdd;
 import com.todo.springtodo.exception.exception_classes.NoSuchUserException;
 import com.todo.springtodo.mappers.ProfileMapper;
 import com.todo.springtodo.mappers.UserMapper;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,8 +39,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addUser(Users users) {
         users.setHashPassword(users.getHashPassword());
-
-        userRepository.save(users);
+        Users existingUser = userRepository.userByLogin(users.getLogin());
+        if (existingUser == null) {
+            userRepository.save(users);
+        }
+        else {
+            throw new DuplicateLoginUserAdd(String.format("User with this login=%s don't exist", users.getLogin()), users);
+        }
     }
 
     @Override
