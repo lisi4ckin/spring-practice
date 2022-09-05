@@ -13,6 +13,7 @@ import java.util.Set;
 @Data
 public class ItemsDTO {
 
+    private Long id;
     private Float price;
     private String title;
     private String description;

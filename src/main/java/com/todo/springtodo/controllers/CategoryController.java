@@ -25,7 +25,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/add")
+    @PostMapping
     public HttpStatus addCategory(Category category){
         logger.debug("operation=addCategory, action=start");
         categoryService.addCategory(category);
@@ -33,7 +33,7 @@ public class CategoryController {
         return HttpStatus.OK;
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public Set<CategoryDTO> getCategories(){
         return categoryService.getAllCategories();
     }
